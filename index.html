@@ -118,11 +118,22 @@
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  .page-text.visible {
+    opacity: 1;
+  }
+
+  @keyframes glow {
+    0% { text-shadow: 0 0 5px #ffdd59, 0 0 10px #f5a623, 0 0 20px #f5a623, 0 0 30px #ffdd59; }
+    100% { text-shadow: 0 0 20px #ffdd59, 0 0 30px #f5a623, 0 0 40px #f5a623, 0 0 50px #ffdd59; }
   }
 </style>
 </head>
 <body>
-  <div class="book" onclick="this.classList.toggle('open')">
+  <div class="book" id="book">
     <div class="cover">
       <div class="front">
         <h1>1-B.C.</h1>
@@ -132,10 +143,31 @@
       <div class="back"></div>
     </div>
     <div class="pages">
-      <div class="page-text">
-        <!-- Text removed; will be added separately -->
+      <div class="page-text" id="page-text">
+        <!-- Text will be loaded here -->
       </div>
     </div>
   </div>
+
+  <script>
+    const pageTextDiv = document.getElementById('page-text');
+    const book = document.getElementById('book');
+
+    // Load text.html into page-text div
+    fetch('text.html')
+      .then(response => response.text())
+      .then(html => {
+        pageTextDiv.innerHTML = html;
+      });
+
+    // Optional: fade text in on first cover click
+    let textVisible = false;
+    book.addEventListener('click', () => {
+      if (!textVisible) {
+        pageTextDiv.classList.add('visible');
+        textVisible = true;
+      }
+    });
+  </script>
 </body>
 </html>
