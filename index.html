@@ -10,8 +10,8 @@
     background: #111;
     height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     overflow: hidden;
     font-family: 'Georgia', serif;
   }
@@ -20,18 +20,24 @@
     width: 250px;
     height: 250px;
     position: relative;
-    perspective: 1000px;
-    cursor: pointer;
+    perspective: 1500px; /* perspective on the book itself */
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .cover {
     width: 100%;
     height: 100%;
     position: absolute;
-    transform-origin: left;
+    top: 0;
+    left: 0;
+    transform-origin: left center; /* vertical center to avoid jump */
     transition: transform 1s ease;
     transform-style: preserve-3d;
     z-index: 2;
+    cursor: pointer;
   }
 
   .cover .front,
@@ -61,7 +67,11 @@
     font-size: 2.5em;
     letter-spacing: 0.1em;
     margin: 0;
-    text-shadow: 0 0 10px #ffdd59, 0 0 20px #ffdd59, 0 0 30px #f5a623, 0 0 40px #f5a623;
+    text-shadow: 
+      0 0 10px #ffdd59,
+      0 0 20px #ffdd59,
+      0 0 30px #f5a623,
+      0 0 40px #f5a623;
     animation: glow 2.5s ease-in-out infinite alternate;
   }
 
@@ -107,11 +117,13 @@
     text-align: left;
     line-height: 1.6em;
     font-size: 1.2em;
-    transition: opacity 1s ease;
   }
 
-  .pages.hidden {
-    opacity: 0;
+  .page-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
   }
 
   @keyframes glow {
@@ -122,7 +134,7 @@
 </head>
 <body>
   <div class="book" id="book">
-    <div class="cover">
+    <div class="cover" id="cover">
       <div class="front">
         <h1>1-B.C.</h1>
         <p>a crypto narrative</p>
@@ -130,33 +142,29 @@
       </div>
       <div class="back"></div>
     </div>
-    <div class="pages hidden" id="bookPages">
-      <!-- Text from text.html will load here -->
+    <div class="pages">
+      <div class="page-text">
+        <!-- This text is loaded separately from text.html -->
+        <iframe src="text.html" frameborder="0" width="100%" height="100%"></iframe>
+      </div>
     </div>
   </div>
 
   <script>
     const book = document.getElementById('book');
-    const pages = document.getElementById('bookPages');
-    let tapCount = 0;
+    const cover = document.getElementById('cover');
+    const pageText = book.querySelector('iframe');
 
-    // Load text.html into pages
-    fetch('text.html')
-      .then(response => response.text())
-      .then(html => {
-        pages.innerHTML = html;
-      });
+    let coverFlipped = false;
+    let textFaded = false;
 
     book.addEventListener('click', () => {
-      tapCount++;
-
-      if (tapCount === 1) {
-        // First tap: open cover and show pages
-        book.classList.add('open');
-        pages.classList.remove('hidden');
-      } else if (tapCount === 2) {
-        // Second tap: fade out pages
-        pages.classList.add('hidden');
+      if (!coverFlipped) {
+        cover.classList.add('open');
+        coverFlipped = true;
+      } else if (!textFaded) {
+        pageText.style.opacity = '0';
+        textFaded = true;
       }
     });
   </script>
