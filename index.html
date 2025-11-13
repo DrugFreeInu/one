@@ -42,17 +42,17 @@
     backface-visibility: hidden;
   }
 
-  /* AGED PAPER BACKGROUND */
+  /* Cover: blue spacey background for clarity */
   .cover .front {
-    background: linear-gradient(145deg, #f5f0d1 0%, #e6dcc3 50%, #d9cbb0 100%);
-    border: 2px solid #8b7d5c;
+    background: radial-gradient(circle at top, #1a1a2e, #162447);
+    border: 2px solid #000;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: #ffdd59; /* keep glowing text color */
+    color: #ffdd59;
   }
 
   .cover .front h1 {
@@ -83,10 +83,11 @@
     transform: rotateY(-160deg);
   }
 
+  /* Pages inside: light tan aged-paper */
   .pages {
     width: 100%;
     height: 100%;
-    background: #fff;
+    background: #f5f0d1; /* light tan */
     position: absolute;
     left: 0;
     top: 0;
