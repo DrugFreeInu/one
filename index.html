@@ -16,21 +16,46 @@
     font-family: 'Georgia', serif;
   }
 
-  iframe {
-    border: none;
+  .book-container {
+    position: relative;
     width: 250px;
     height: 250px;
+  }
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  #pageFrame {
+    z-index: 1;
+  }
+
+  #coverFrame {
+    z-index: 2;
   }
 </style>
 </head>
 <body>
-  <!-- Embed cover.html with cache-busting -->
-  <iframe id="coverFrame"></iframe>
+  <div class="book-container">
+    <!-- Page underneath -->
+    <iframe id="pageFrame"></iframe>
+    <!-- Cover on top -->
+    <iframe id="coverFrame"></iframe>
+  </div>
 
   <script>
-    const iframe = document.getElementById('coverFrame');
-    // Append timestamp to avoid caching
-    iframe.src = 'cover.html?t=' + new Date().getTime();
+    const coverFrame = document.getElementById('coverFrame');
+    const pageFrame = document.getElementById('pageFrame');
+
+    // Cache-busting
+    coverFrame.src = 'cover.html?t=' + new Date().getTime();
+    pageFrame.src = 'page.html?t=' + new Date().getTime();
   </script>
 </body>
 </html>
