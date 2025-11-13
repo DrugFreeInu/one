@@ -18,7 +18,7 @@
 
   .book {
     width: 250px;
-    height: 250px; /* square book */
+    height: 250px;
     position: relative;
     perspective: 1000px;
   }
@@ -31,6 +31,7 @@
     transition: transform 1s ease;
     transform-style: preserve-3d;
     z-index: 2;
+    cursor: pointer;
   }
 
   .cover .front,
@@ -42,7 +43,6 @@
     backface-visibility: hidden;
   }
 
-  /* Cover styling */
   .cover .front {
     background: radial-gradient(circle at top, #1a1a2e, #162447);
     border: 2px solid #000;
@@ -61,7 +61,11 @@
     font-size: 2.5em;
     letter-spacing: 0.1em;
     margin: 0;
-    text-shadow: 0 0 10px #ffdd59, 0 0 20px #ffdd59, 0 0 30px #f5a623, 0 0 40px #f5a623;
+    text-shadow: 
+      0 0 10px #ffdd59,
+      0 0 20px #ffdd59,
+      0 0 30px #f5a623,
+      0 0 40px #f5a623;
     animation: glow 2.5s ease-in-out infinite alternate;
   }
 
@@ -90,7 +94,6 @@
     transform: rotateY(-160deg);
   }
 
-  /* Page styling */
   .pages {
     width: 100%;
     height: 100%;
@@ -100,37 +103,21 @@
     top: 0;
     z-index: 1;
     border-radius: 0 5px 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
     box-sizing: border-box;
+    text-align: left;
+    line-height: 1.6em;
+    font-size: 1.2em;
+  }
+
+  .page-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start; /* aligns text nicely to left */
-    font-size: 1.1em;
-    line-height: 1.6em;
-    color: #333;
-    text-align: left;
-    overflow-wrap: break-word; /* prevents cutting off long lines */
-  }
-
-  .pages p {
-    margin: 0 0 0.5em 0; /* spacing between lines */
-  }
-
-  .label {
-    position: absolute;
-    bottom: -40px;
-    width: 100%;
-    color: #aaa;
-    font-family: serif;
-    font-size: 14px;
-    text-align: center;
-    opacity: 0.6;
-  }
-
-  @keyframes glow {
-    0% { text-shadow: 0 0 5px #ffdd59, 0 0 10px #f5a623, 0 0 20px #f5a623, 0 0 30px #ffdd59; }
-    100% { text-shadow: 0 0 20px #ffdd59, 0 0 30px #f5a623, 0 0 40px #f5a623, 0 0 50px #ffdd59; }
+    height: 100%;
   }
 </style>
 </head>
@@ -145,12 +132,10 @@
       <div class="back"></div>
     </div>
     <div class="pages">
-      <p>before crypto,</p>
-      <p>before coins,</p>
-      <p>before Christ,</p>
-      <p>and long before leverage,</p>
+      <div class="page-text">
+        <!-- Text removed; will be added separately -->
+      </div>
     </div>
-    <div class="label">tap to open</div>
   </div>
 </body>
 </html>
