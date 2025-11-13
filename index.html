@@ -12,14 +12,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Georgia', serif;
     overflow: hidden;
+    font-family: 'Georgia', serif;
   }
 
-  .book-container {
-    position: relative;
+  .book {
     width: 250px;
-    height: 250px;
+    height: 250px; /* square book */
+    position: relative;
     perspective: 1000px;
   }
 
@@ -28,10 +28,9 @@
     height: 100%;
     position: absolute;
     transform-origin: left;
-    transition: transform 1.2s ease;
+    transition: transform 1s ease;
     transform-style: preserve-3d;
-    z-index: 3;
-    cursor: pointer;
+    z-index: 2;
   }
 
   .cover .front,
@@ -43,9 +42,11 @@
     backface-visibility: hidden;
   }
 
+  /* Cover: blue spacey background */
   .cover .front {
     background: radial-gradient(circle at top, #1a1a2e, #162447);
     border: 2px solid #000;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,14 +54,14 @@
     text-align: center;
     color: #ffdd59;
     position: relative;
-    padding-bottom: 25px;
+    padding-bottom: 25px; /* space for signature */
   }
 
   .cover .front h1 {
     font-size: 2.5em;
     letter-spacing: 0.1em;
     margin: 0;
-    text-shadow:
+    text-shadow: 
       0 0 10px #ffdd59,
       0 0 20px #ffdd59,
       0 0 30px #f5a623,
@@ -75,11 +76,12 @@
     animation: glow 2.5s ease-in-out infinite alternate;
   }
 
+  /* DrugFreeInu signature in bold italic black */
   .cover .front .signature {
     position: absolute;
     bottom: 5px;
     font-size: 0.8em;
-    color: #111;
+    color: #111; /* subtle black */
     font-weight: bold;
     font-style: italic;
   }
@@ -89,40 +91,21 @@
     transform: rotateY(180deg);
   }
 
-  .cover.open {
+  .open .cover {
     transform: rotateY(-160deg);
   }
 
-  /* Page background */
-  .page {
+  /* Pages inside: light tan aged-paper */
+  .pages {
     width: 100%;
     height: 100%;
-    background: #f5f0d1;
-    border-radius: 0 5px 5px 0;
+    background: #f5f0d1; /* light tan */
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 15px;
-    box-sizing: border-box;
-    color: #333;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-    cursor: pointer;
-  }
-
-  .page.show {
-    opacity: 1;
-  }
-
-  .page p {
-    font-size: 1.2em;
-    line-height: 1.6em;
-    margin: 0;
+    z-index: 1;
+    border-radius: 0 5px 5px 0;
+    overflow: hidden;
   }
 
   .label {
@@ -143,9 +126,8 @@
 </style>
 </head>
 <body>
-  <div class="book-container">
-    <!-- Cover -->
-    <div class="cover" id="cover">
+  <div class="book" onclick="this.classList.toggle('open')">
+    <div class="cover">
       <div class="front">
         <h1>1-B.C.</h1>
         <p>a crypto narrative</p>
@@ -153,48 +135,8 @@
       </div>
       <div class="back"></div>
     </div>
-
-    <!-- Page -->
-    <div class="page" id="page">
-      <p id="pageText">
-        Long before leverage,<br>
-        before crypto,<br>
-        before coins,<br>
-        before Christ<br>
-        …
-      </p>
-    </div>
-
+    <div class="pages"></div>
     <div class="label">tap to open</div>
   </div>
-
-  <script>
-    const cover = document.getElementById('cover');
-    const page = document.getElementById('page');
-    const pageText = document.getElementById('pageText');
-
-    const pages = [
-      `Long before leverage,<br>before crypto,<br>before coins,<br>before Christ<br>…`,
-      `They called it light, but it was really the first transaction.<br>Energy for existence.<br>Exchange for being.`
-    ];
-
-    let currentPage = 0;
-
-    // Open cover
-    cover.addEventListener('click', () => {
-      cover.classList.add('open');
-      setTimeout(() => page.classList.add('show'), 1000); // fade in after cover opens
-    });
-
-    // Tap page to fade text to next
-    page.addEventListener('click', () => {
-      page.classList.remove('show');
-      setTimeout(() => {
-        currentPage = (currentPage + 1) % pages.length;
-        pageText.innerHTML = pages[currentPage];
-        page.classList.add('show');
-      }, 1000);
-    });
-  </script>
 </body>
 </html>
