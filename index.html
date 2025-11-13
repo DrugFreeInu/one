@@ -17,8 +17,8 @@
   }
 
   .book {
-    width: 250px;   /* square width */
-    height: 250px;  /* square height */
+    width: 250px;
+    height: 250px;
     position: relative;
     perspective: 1000px;
   }
@@ -53,6 +53,8 @@
     align-items: center;
     text-align: center;
     color: #ffdd59;
+    position: relative;
+    padding-bottom: 20px; /* space for author line */
   }
 
   .cover .front h1 {
@@ -72,6 +74,14 @@
     margin-top: 0.5em;
     text-shadow: 0 0 5px #ffd369, 0 0 10px #ffb347;
     animation: glow 2.5s ease-in-out infinite alternate;
+  }
+
+  /* Author line at bottom of cover */
+  .cover .front .author {
+    position: absolute;
+    bottom: 5px;
+    font-size: 0.7em;
+    color: #111; /* dark black for subtle contrast */
   }
 
   .cover .back {
@@ -119,6 +129,7 @@
       <div class="front">
         <h1>1-B.C.</h1>
         <p>a crypto narrative</p>
+        <div class="author">authored by DrugFreeInu</div>
       </div>
       <div class="back"></div>
     </div>
