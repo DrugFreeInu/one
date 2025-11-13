@@ -7,33 +7,53 @@
 <style>
   body {
     margin: 0;
+    background: transparent; /* seamless under cover */
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Georgia', serif;
-    background: #f5f0d1; /* light tan aged-paper */
-    color: #333;
   }
 
   .page {
     width: 250px;
     height: 250px;
-    padding: 20px;
-    box-sizing: border-box;
+    background: #f5f0d1;
     border-radius: 5px;
-    overflow: hidden;
+    box-shadow:
+      inset 0 0 20px rgba(0, 0, 0, 0.15),
+      0 0 15px rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: left;
     flex-direction: column;
+    padding: 25px;
+    box-sizing: border-box;
+    color: #333;
+  }
+
+  /* Future fade effect */
+  .fade {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+  }
+
+  .fade.show {
+    opacity: 1;
   }
 </style>
 </head>
 <body>
-  <div class="page">
-    <!-- Page content will be added here -->
+  <div class="page fade" id="pageContent">
+    <!-- blank for now -->
   </div>
+
+  <script>
+    // soft fade-in when loaded
+    window.onload = () => {
+      document.getElementById('pageContent').classList.add('show');
+    };
+  </script>
 </body>
 </html>
