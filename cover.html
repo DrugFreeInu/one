@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>1-B.C. Cover</title>
+<style>
+  body {
+    margin: 0;
+    background: #111;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Georgia', serif;
+    overflow: hidden;
+  }
+
+  .cover-container {
+    width: 250px;
+    height: 250px; /* square book */
+    perspective: 1000px;
+    position: relative;
+  }
+
+  .cover {
+    width: 100%;
+    height: 100%;
+    transform-origin: left;
+    transition: transform 1s ease;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+  }
+
+  .cover .front,
+  .cover .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    backface-visibility: hidden;
+  }
+
+  .cover .front {
+    background: radial-gradient(circle at top, #1a1a2e, #162447);
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffdd59;
+    position: relative;
+    padding-bottom: 25px; /* space for signature */
+  }
+
+  .cover .front h1 {
+    font-size: 2.5em;
+    letter-spacing: 0.1em;
+    margin: 0;
+    text-shadow: 
+      0 0 10px #ffdd59,
+      0 0 20px #ffdd59,
+      0 0 30px #f5a623,
+      0 0 40px #f5a623;
+    animation: glow 2.5s ease-in-out infinite alternate;
+  }
+
+  .cover .front p {
+    font-size: 1em;
+    margin-top: 0.5em;
+    text-shadow: 0 0 5px #ffd369, 0 0 10px #ffb347;
+    animation: glow 2.5s ease-in-out infinite alternate;
+  }
+
+  .cover .front .signature {
+    position: absolute;
+    bottom: 5px;
+    font-size: 0.8em;
+    color: #111;
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .cover .back {
+    background: #000;
+    transform: rotateY(180deg);
+  }
+
+  .cover.open {
+    transform: rotateY(-160deg);
+  }
+
+  @keyframes glow {
+    0% { text-shadow: 0 0 5px #ffdd59, 0 0 10px #f5a623, 0 0 20px #f5a623, 0 0 30px #ffdd59; }
+    100% { text-shadow: 0 0 20px #ffdd59, 0 0 30px #f5a623, 0 0 40px #f5a623, 0 0 50px #ffdd59; }
+  }
+</style>
+</head>
+<body>
+  <div class="cover-container">
+    <div class="cover" id="cover">
+      <div class="front">
+        <h1>1-B.C.</h1>
+        <p>a crypto narrative</p>
+        <div class="signature">DrugFreeInu</div>
+      </div>
+      <div class="back"></div>
+    </div>
+  </div>
+
+  <script>
+    const cover = document.getElementById('cover');
+
+    // Flip cover on click
+    cover.addEventListener('click', () => {
+      cover.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
