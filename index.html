@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>1-B.C. A Crypto Narrative</title>
 <style>
   body {
@@ -10,52 +10,192 @@
     background: #111;
     height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
-    overflow: hidden;
+    justify-content: center;
     font-family: 'Georgia', serif;
+    overflow: hidden;
   }
 
   .book-container {
     position: relative;
     width: 250px;
     height: 250px;
+    perspective: 1000px;
   }
 
-  iframe {
+  .cover {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 250px;
-    border: none;
+    transform-origin: left;
+    transition: transform 1s ease;
+    transform-style: preserve-3d;
+    z-index: 3;
+    cursor: pointer;
+  }
+
+  .cover .front,
+  .cover .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
+    backface-visibility: hidden;
   }
 
-  #pageFrame {
-    z-index: 1;
+  .cover .front {
+    background: radial-gradient(circle at top, #1a1a2e, #162447);
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffdd59;
+    position: relative;
+    padding-bottom: 25px;
   }
 
-  #coverFrame {
+  .cover .front h1 {
+    font-size: 2.5em;
+    letter-spacing: 0.1em;
+    margin: 0;
+    text-shadow: 0 0 10px #ffdd59, 0 0 20px #ffdd59, 0 0 30px #f5a623, 0 0 40px #f5a623;
+    animation: glow 2.5s ease-in-out infinite alternate;
+  }
+
+  .cover .front p {
+    font-size: 1em;
+    margin-top: 0.5em;
+    text-shadow: 0 0 5px #ffd369, 0 0 10px #ffb347;
+    animation: glow 2.5s ease-in-out infinite alternate;
+  }
+
+  .cover .front .signature {
+    position: absolute;
+    bottom: 5px;
+    font-size: 0.8em;
+    color: #111;
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .cover .back {
+    background: #000;
+    transform: rotateY(180deg);
+  }
+
+  .cover.open {
+    transform: rotateY(-160deg);
+  }
+
+  /* Pages inside: light tan aged-paper */
+  .page-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
     z-index: 2;
+  }
+
+  .page {
+    width: 100%;
+    height: 100%;
+    background: #f5f0d1;
+    border-radius: 0 5px 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 1s ease;
+    cursor: pointer;
+  }
+
+  .page.show {
+    opacity: 1;
+  }
+
+  .page p {
+    font-size: 1.2em;
+    line-height: 1.4em;
+    margin: 0;
+    color: #333;
+  }
+
+  .label {
+    position: absolute;
+    bottom: -40px;
+    width: 100%;
+    color: #aaa;
+    font-family: serif;
+    font-size: 14px;
+    text-align: center;
+    opacity: 0.6;
+  }
+
+  @keyframes glow {
+    0% { text-shadow: 0 0 5px #ffdd59, 0 0 10px #f5a623, 0 0 20px #f5a623, 0 0 30px #ffdd59; }
+    100% { text-shadow: 0 0 20px #ffdd59, 0 0 30px #f5a623, 0 0 40px #f5a623, 0 0 50px #ffdd59; }
   }
 </style>
 </head>
 <body>
   <div class="book-container">
-    <!-- Page underneath -->
-    <iframe id="pageFrame"></iframe>
-    <!-- Cover on top -->
-    <iframe id="coverFrame"></iframe>
+    <!-- Cover -->
+    <div class="cover" id="cover">
+      <div class="front">
+        <h1>1-B.C.</h1>
+        <p>a crypto narrative</p>
+        <div class="signature">DrugFreeInu</div>
+      </div>
+      <div class="back"></div>
+    </div>
+
+    <!-- Pages container -->
+    <div class="page-container">
+      <div class="page" id="page1">
+        <p>
+          Long before leverage,<br>
+          before crypto,<br>
+          before coins,<br>
+          before Christ<br>
+          …
+        </p>
+      </div>
+      <div class="page" id="page2">
+        <p>
+          <!-- Future page text goes here -->
+        </p>
+      </div>
+    </div>
+
+    <div class="label">tap to open</div>
   </div>
 
   <script>
-    const coverFrame = document.getElementById('coverFrame');
-    const pageFrame = document.getElementById('pageFrame');
+    const cover = document.getElementById('cover');
+    const page1 = document.getElementById('page1');
+    const page2 = document.getElementById('page2');
 
-    // Cache-busting
-    coverFrame.src = 'cover.html?t=' + new Date().getTime();
-    pageFrame.src = 'page.html?t=' + new Date().getTime();
+    // Flip the cover independently
+    cover.addEventListener('click', () => {
+      cover.classList.add('open');
+    });
+
+    // Fade in page 1 on click
+    page1.addEventListener('click', () => {
+      page1.classList.add('show');
+    });
+
+    // Example: you can tap page1 again to fade page2 (later)
+    page2.addEventListener('click', () => {
+      page2.classList.add('show');
+    });
   </script>
 </body>
 </html>
