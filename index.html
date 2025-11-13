@@ -42,24 +42,19 @@
     backface-visibility: hidden;
   }
 
-.cover .front {
-  background: linear-gradient(145deg, #f5f0d1 0%, #e6dcc3 50%, #d9cbb0 100%);
-  border: 2px solid #8b7d5c;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #8b5e3c;
-  text-align: center;
-  font-family: 'Georgia', serif;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
-  background-image: 
-    radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-    radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
-}
+  /* AGED PAPER BACKGROUND */
+  .cover .front {
+    background: linear-gradient(145deg, #f5f0d1 0%, #e6dcc3 50%, #d9cbb0 100%);
+    border: 2px solid #8b7d5c;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffdd59; /* keep glowing text color */
+  }
+
   .cover .front h1 {
     font-size: 2.5em;
     letter-spacing: 0.1em;
@@ -69,13 +64,14 @@
       0 0 20px #ffdd59,
       0 0 30px #f5a623,
       0 0 40px #f5a623;
+    animation: glow 2.5s ease-in-out infinite alternate;
   }
 
   .cover .front p {
     font-size: 1em;
-    color: #ffd369;
     margin-top: 0.5em;
     text-shadow: 0 0 5px #ffd369, 0 0 10px #ffb347;
+    animation: glow 2.5s ease-in-out infinite alternate;
   }
 
   .cover .back {
@@ -113,10 +109,6 @@
   @keyframes glow {
     0% { text-shadow: 0 0 5px #ffdd59, 0 0 10px #f5a623, 0 0 20px #f5a623, 0 0 30px #ffdd59; }
     100% { text-shadow: 0 0 20px #ffdd59, 0 0 30px #f5a623, 0 0 40px #f5a623, 0 0 50px #ffdd59; }
-  }
-
-  .cover .front h1, .cover .front p {
-    animation: glow 2.5s ease-in-out infinite alternate;
   }
 </style>
 </head>
